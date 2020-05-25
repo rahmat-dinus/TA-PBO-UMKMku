@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">UMKM ku</string>
+    <string name="app_desc">Pendataan Usaha Mikro Kecil Menengah</string>
+    <string name="copyright">Rahmat Trinanda\n2020</string>
+
+    <string name="masuk">Masuk</string>
+    <string name="daftar">Daftar</string>
+    <string name="nama">Nama</string>
+    <string name="email">E-Mail</string>
+    <string name="telepon">Telepon</string>
+    <string name="password">Password</string>
+    <string name="kPassword">Konfirmasi Password</string>
+    <string name="bAkun">Belum Punya Akun? </string>
+    <string name="sAkun">Sudah Punya Akun? </string>
+    <string name="isiKolom">Kolom wajib diisi!</string>
+    <string name="passSama">Password Tidak Sama!</string>
+
+    <string name="reqLoc">Ijinkan akses lokasi agar dapat melanjutkan.</string>
+    <string name="nyalaGps">Hidupkan lokasi agar dapat melanjutkan.</string>
+    <string name="turnOn">Nyalakan Lokasi</string>
+    <string name="openSetting">Buka Pengaturan</string>
+    <string name="keluar">Keluar</string>
+</resources>
