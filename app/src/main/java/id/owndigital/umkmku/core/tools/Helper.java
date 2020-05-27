@@ -8,13 +8,21 @@ import android.provider.Settings;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
+
+import id.owndigital.umkmku.core.datasource.SPData;
 import okhttp3.RequestBody;
 
 public class Helper {
     private Activity activity;
+    private SPData spData;
 
     public Helper(Activity activity) {
         this.activity = activity;
+        this.spData = SPData.getInstance(activity);
     }
 
     public void closeKeyboard() {
@@ -36,5 +44,23 @@ public class Helper {
         Uri uri = Uri.fromParts("package", this.activity.getPackageName(), null);
         intent.setData(uri);
         this.activity.startActivity(intent);
+    }
+
+    public String greetingText() {
+        String greeting = "Selamat ";
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+        if (hour > 0 && hour < 12) {
+            greeting += "Pagi";
+        } else if (hour >= 12 && hour < 15) {
+            greeting += "Siang";
+        } else if (hour >= 15 && hour < 18) {
+            greeting += "Sore";
+        } else {
+            greeting += "Malam";
+        }
+
+        greeting += ", " + spData.getNama().substring(0, spData.getNama().indexOf(' '));
+        return greeting;
     }
 }
