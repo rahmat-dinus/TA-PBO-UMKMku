@@ -3,8 +3,10 @@ package id.owndigital.umkmku.core.tools;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.provider.Settings;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -62,5 +64,14 @@ public class Helper {
 
         greeting += ", " + spData.getNama().substring(0, spData.getNama().indexOf(' '));
         return greeting;
+    }
+
+    public int dpToPx(int dp){
+        Resources r = activity.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                r.getDisplayMetrics()
+        );
     }
 }

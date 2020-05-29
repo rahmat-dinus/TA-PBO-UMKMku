@@ -1,9 +1,12 @@
 package id.owndigital.umkmku.core.models;
 
+import java.util.Comparator;
+
 public class UmkmModel {
     private String uid, namaUmkm, hpUmkm, emailUmkm, longitude, latitude, countPopuler, foto, createdAt;
+    private double jarak;
 
-    public UmkmModel(String uid, String namaUmkm, String hpUmkm, String emailUmkm, String longitude, String latitude, String countPopuler, String foto, String createdAt) {
+    public UmkmModel(String uid, String namaUmkm, String hpUmkm, String emailUmkm, String longitude, String latitude, String countPopuler, String foto, String createdAt, double jarak) {
         this.uid = uid;
         this.namaUmkm = namaUmkm;
         this.hpUmkm = hpUmkm;
@@ -13,6 +16,7 @@ public class UmkmModel {
         this.countPopuler = countPopuler;
         this.foto = foto;
         this.createdAt = createdAt;
+        this.jarak = jarak;
     }
 
     public String getUid() {
@@ -86,4 +90,58 @@ public class UmkmModel {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
+    public double getJarak() {
+        return jarak;
+    }
+
+    public void setJarak(double jarak) {
+        this.jarak = jarak;
+    }
+
+    public static Comparator<UmkmModel> sortLokasiAsc = new Comparator<UmkmModel>() {
+        @Override
+        public int compare(UmkmModel o1, UmkmModel o2) {
+            return (Double.compare(o1.getJarak(), o2.getJarak()));
+        }
+    };
+
+    public static Comparator<UmkmModel> sortLokasiDesc = new Comparator<UmkmModel>() {
+        @Override
+        public int compare(UmkmModel o1, UmkmModel o2) {
+            return (Double.compare(o2.getJarak(), o1.getJarak()));
+        }
+    };
+
+    public static Comparator<UmkmModel> sortPopulerAsc = new Comparator<UmkmModel>() {
+        @Override
+        public int compare(UmkmModel o1, UmkmModel o2) {
+            int c1 = Integer.parseInt(o1.getCountPopuler());
+            int c2 = Integer.parseInt(o2.getCountPopuler());
+            return (Integer.compare(c2, c1));
+        }
+    };
+
+    public static Comparator<UmkmModel> sortPopulerDesc = new Comparator<UmkmModel>() {
+        @Override
+        public int compare(UmkmModel o1, UmkmModel o2) {
+            int c1 = Integer.parseInt(o1.getCountPopuler());
+            int c2 = Integer.parseInt(o2.getCountPopuler());
+            return (Integer.compare(c1, c2));
+        }
+    };
+
+    public static Comparator<UmkmModel> sortTerbaruAsc = new Comparator<UmkmModel>() {
+        @Override
+        public int compare(UmkmModel o1, UmkmModel o2) {
+            return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+        }
+    };
+
+    public static Comparator<UmkmModel> sortTerbaruDesc = new Comparator<UmkmModel>() {
+        @Override
+        public int compare(UmkmModel o1, UmkmModel o2) {
+            return o1.getCreatedAt().compareTo(o2.getCreatedAt());
+        }
+    };
 }

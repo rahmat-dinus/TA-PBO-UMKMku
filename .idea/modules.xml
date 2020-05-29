@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/TA-PBO-UMKMku.iml" filepath="$PROJECT_DIR$/.idea/TA-PBO-UMKMku.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UMKM ku.iml" filepath="$PROJECT_DIR$/UMKM ku.iml" group="UMKM ku" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="UMKM ku/app" />
+    </modules>
+  </component>
+</project>

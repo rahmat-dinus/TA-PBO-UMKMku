@@ -32,6 +32,7 @@ import id.owndigital.umkmku.core.datasource.BaseApi;
 import id.owndigital.umkmku.core.datasource.SPData;
 import id.owndigital.umkmku.core.mInterface.RecyclerTouchListener;
 import id.owndigital.umkmku.core.models.UmkmModel;
+import id.owndigital.umkmku.core.sorter.KategoriUmkm;
 import id.owndigital.umkmku.core.tools.Helper;
 import id.owndigital.umkmku.core.tools.LocationHandler;
 import id.owndigital.umkmku.core.viewHolders.HomeUmkmListAdapter;
@@ -40,14 +41,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private Helper helper;
     private LocationHandler location;
-    private BaseApi api;
     private TextView nama, alamat, tvHolder, keluar;
 
     private ArrayList<UmkmModel> listUmkm;
     private LinearLayout lData;
-    private TextView sTerdekat;
-    private RecyclerView rTerdekat;
-    private RecyclerView.Adapter aTerdekat;
+    private TextView sTerdekat, sPopuler, sTerbaru;
+    private RecyclerView.Adapter aTerdekat, aPopuler, aTerbaru;
     private ProgressBar pBar;
 
     @Override
@@ -63,12 +62,13 @@ public class HomeActivity extends AppCompatActivity {
         tvHolder.setVisibility(View.GONE);
 
         listUmkm = new ArrayList<>();
-        rTerdekat= findViewById(R.id.rTerdekat);
+
+        RecyclerView rTerdekat = findViewById(R.id.rTerdekat);
         rTerdekat.setHasFixedSize(true);
-        LinearLayoutManager layoutManager= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        aTerdekat = new HomeUmkmListAdapter(listUmkm, this);
+        LinearLayoutManager lTerdekat = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        aTerdekat = new HomeUmkmListAdapter(listUmkm, this, KategoriUmkm.TERDEKAT_ASC);
         rTerdekat.setAdapter(aTerdekat);
-        rTerdekat.setLayoutManager(layoutManager);
+        rTerdekat.setLayoutManager(lTerdekat);
 
         rTerdekat.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rTerdekat, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -89,6 +89,58 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        RecyclerView rPopuler = findViewById(R.id.rPopuler);
+        rPopuler.setHasFixedSize(true);
+        LinearLayoutManager lPopuler = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        aPopuler = new HomeUmkmListAdapter(listUmkm, this, KategoriUmkm.POPULER_ASC);
+        rPopuler.setAdapter(aPopuler);
+        rPopuler.setLayoutManager(lPopuler);
+
+        rPopuler.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rPopuler, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+        sPopuler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        RecyclerView rTerbaru = findViewById(R.id.rTerbaru);
+        rTerbaru.setHasFixedSize(true);
+        LinearLayoutManager lTerbaru = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        aTerbaru = new HomeUmkmListAdapter(listUmkm, this, KategoriUmkm.TERBARU_ASC);
+        rTerbaru.setAdapter(aTerbaru);
+        rTerbaru.setLayoutManager(lTerbaru);
+
+        rTerbaru.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rTerbaru, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+        sTerbaru.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         keluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +152,6 @@ public class HomeActivity extends AppCompatActivity {
     private void initState() {
         Activity activity = HomeActivity.this;
         helper = new Helper(activity);
-        api = new BaseApi();
         location = new LocationHandler(activity);
         nama = findViewById(R.id.nama);
         alamat = findViewById(R.id.alamat);
@@ -108,24 +159,26 @@ public class HomeActivity extends AppCompatActivity {
         keluar = findViewById(R.id.keluar);
         lData = findViewById(R.id.layoutData);
         sTerdekat = findViewById(R.id.sTerdekat);
+        sPopuler = findViewById(R.id.sPopuler);
+        sTerbaru = findViewById(R.id.sTerbaru);
         pBar = findViewById(R.id.pBar);
         getUmkm();
     }
 
-    private void getUmkm(){
+    private void getUmkm() {
         pBar.setVisibility(View.VISIBLE);
         lData.setVisibility(View.GONE);
         tvHolder.setVisibility(View.GONE);
 
-        StringRequest strReq = new StringRequest(Request.Method.GET, api.loadData, new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.GET, BaseApi.loadData, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 try {
                     JSONArray data = new JSONArray(response);
-                    if(data.length()>0){
+                    if (data.length() > 0) {
                         lData.setVisibility(View.VISIBLE);
-                        for(int i =0;i<data.length(); i++) {
+                        for (int i = 0; i < data.length(); i++) {
                             JSONObject productObject = data.getJSONObject(i);
                             listUmkm.add(new UmkmModel(
                                     productObject.getString("uid"),
@@ -136,14 +189,17 @@ public class HomeActivity extends AppCompatActivity {
                                     productObject.getString("latitude"),
                                     productObject.getString("count_populer"),
                                     productObject.getString("foto"),
-                                    productObject.getString("created_at")
+                                    productObject.getString("created_at"),
+                                    location.hitungJarak(
+                                            Double.parseDouble(productObject.getString("latitude")),
+                                            Double.parseDouble(productObject.getString("longitude"))
+                                    )
                             ));
                         }
-                    }else
-                    if (data.length()==0){
+                    } else if (data.length() == 0) {
                         tvHolder.setVisibility(View.VISIBLE);
                         tvHolder.setText(R.string.tdkAdaData);
-                    }else{
+                    } else {
                         tvHolder.setVisibility(View.VISIBLE);
                         tvHolder.setText(R.string.gagalMuat);
                     }
@@ -151,6 +207,8 @@ public class HomeActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 aTerdekat.notifyDataSetChanged();
+                aPopuler.notifyDataSetChanged();
+                aTerbaru.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
