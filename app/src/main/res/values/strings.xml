@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">UMKM ku</string>
     <string name="app_desc">Pendataan Usaha Mikro Kecil Menengah</string>
     <string name="copyright">Rahmat Trinanda\n2020</string>
@@ -21,4 +21,12 @@
     <string name="openSetting">Buka Pengaturan</string>
     <string name="keluar">Keluar</string>
     <string name="vertical_ellipsis">&#8942;</string>
+
+    <string name="terdekat">Disekitar Anda</string>
+    <string name="populer" tools:ignore="Typos">Sedang Populer</string>
+    <string name="terbaru">UMKM Baru</string>
+    <string name="lainnya">Lainnya</string>
+    <string name="selengkapnya">Selengkapnya</string>
+    <string name="tdkAdaData">Tidak Ada Data</string>
+    <string name="gagalMuat">Gagal Memuat Data</string>
 </resources>
