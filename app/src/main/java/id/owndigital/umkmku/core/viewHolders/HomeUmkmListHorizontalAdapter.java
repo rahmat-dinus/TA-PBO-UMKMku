@@ -30,14 +30,14 @@ import id.owndigital.umkmku.core.tools.Helper;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
-public class HomeUmkmListAdapter extends RecyclerView.Adapter<HomeUmkmListAdapter.UmkmViewHolder> {
+public class HomeUmkmListHorizontalAdapter extends RecyclerView.Adapter<HomeUmkmListHorizontalAdapter.UmkmViewHolder> {
 
     private final Context context;
     private ArrayList<UmkmModel> umkmModels;
     private Helper helper;
     private KategoriUmkm kategoriUmkm;
 
-    public HomeUmkmListAdapter(ArrayList<UmkmModel> umkmModels, Activity activity, KategoriUmkm kategoriUmkm) {
+    public HomeUmkmListHorizontalAdapter(ArrayList<UmkmModel> umkmModels, Activity activity, KategoriUmkm kategoriUmkm) {
         this.umkmModels = umkmModels;
         this.context = activity.getBaseContext();
         this.helper = new Helper(activity);
@@ -47,7 +47,8 @@ public class HomeUmkmListAdapter extends RecyclerView.Adapter<HomeUmkmListAdapte
     static class UmkmViewHolder extends RecyclerView.ViewHolder {
         private ImageView fotoUmkm;
         private TextView namaUmkm, jarakUmkm;
-        private CardView itemCard, itemSelengkapnya;
+        private CardView itemCard, itemSelengkapnyaCard;
+        private LinearLayout itemSelengkapnya;
 
         //Initializing Views
         UmkmViewHolder(View itemView) {
@@ -58,6 +59,7 @@ public class HomeUmkmListAdapter extends RecyclerView.Adapter<HomeUmkmListAdapte
             jarakUmkm = itemView.findViewById(R.id.jarakUmkm);
             itemCard = itemView.findViewById(R.id.itemCard);
             itemSelengkapnya = itemView.findViewById(R.id.itemSelengkapnya);
+            itemSelengkapnyaCard = itemView.findViewById(R.id.itemSelengkapnyaCard);
 
         }
     }
@@ -136,6 +138,6 @@ public class HomeUmkmListAdapter extends RecyclerView.Adapter<HomeUmkmListAdapte
 
     @Override
     public int getItemCount() {
-        return 3;
+        return Math.min(umkmModels.size(), 3);
     }
 }

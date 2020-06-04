@@ -58,39 +58,42 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:id="@+id/itemSelengkapnya"
-        android:layout_width="108dp"
-        android:layout_height="108dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:shape="ring"
         android:layout_marginStart="16dp"
-        android:layout_gravity="center"
-        app:cardCornerRadius="75dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/itemSelengkapnyaCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center"
-            tools:ignore="UseCompoundDrawables">
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:shape="ring"
+            app:cardCornerRadius="75dp">
 
             <ImageView
-                android:layout_gravity="center"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_arrow_right"
-                android:contentDescription="@string/selengkapnya"/>
+                android:layout_margin="16dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/selengkapnya"
+                android:src="@drawable/ic_arrow_right" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/selengkapnya"/>
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/selengkapnya" />
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>

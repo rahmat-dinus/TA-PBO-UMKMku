@@ -35,7 +35,8 @@ import id.owndigital.umkmku.core.models.UmkmModel;
 import id.owndigital.umkmku.core.sorter.KategoriUmkm;
 import id.owndigital.umkmku.core.tools.Helper;
 import id.owndigital.umkmku.core.tools.LocationHandler;
-import id.owndigital.umkmku.core.viewHolders.HomeUmkmListAdapter;
+import id.owndigital.umkmku.core.viewHolders.HomeUmkmListHorizontalAdapter;
+import id.owndigital.umkmku.core.viewHolders.HomeUmkmListVerticalAdapter;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -45,8 +46,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private ArrayList<UmkmModel> listUmkm;
     private LinearLayout lData;
-    private TextView sTerdekat, sPopuler, sTerbaru;
-    private RecyclerView.Adapter aTerdekat, aPopuler, aTerbaru;
+    private RecyclerView.Adapter aTerdekat, aPopuler, aTerbaru, aLainnya;
     private ProgressBar pBar;
 
     @Override
@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView rTerdekat = findViewById(R.id.rTerdekat);
         rTerdekat.setHasFixedSize(true);
         LinearLayoutManager lTerdekat = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        aTerdekat = new HomeUmkmListAdapter(listUmkm, this, KategoriUmkm.TERDEKAT_ASC);
+        aTerdekat = new HomeUmkmListHorizontalAdapter(listUmkm, this, KategoriUmkm.TERDEKAT_ASC);
         rTerdekat.setAdapter(aTerdekat);
         rTerdekat.setLayoutManager(lTerdekat);
 
@@ -82,17 +82,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         }));
 
-        sTerdekat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         RecyclerView rPopuler = findViewById(R.id.rPopuler);
         rPopuler.setHasFixedSize(true);
         LinearLayoutManager lPopuler = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        aPopuler = new HomeUmkmListAdapter(listUmkm, this, KategoriUmkm.POPULER_ASC);
+        aPopuler = new HomeUmkmListHorizontalAdapter(listUmkm, this, KategoriUmkm.POPULER_ASC);
         rPopuler.setAdapter(aPopuler);
         rPopuler.setLayoutManager(lPopuler);
 
@@ -108,17 +101,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         }));
 
-        sPopuler.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         RecyclerView rTerbaru = findViewById(R.id.rTerbaru);
         rTerbaru.setHasFixedSize(true);
         LinearLayoutManager lTerbaru = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        aTerbaru = new HomeUmkmListAdapter(listUmkm, this, KategoriUmkm.TERBARU_ASC);
+        aTerbaru = new HomeUmkmListHorizontalAdapter(listUmkm, this, KategoriUmkm.TERBARU_ASC);
         rTerbaru.setAdapter(aTerbaru);
         rTerbaru.setLayoutManager(lTerbaru);
 
@@ -134,12 +120,24 @@ public class HomeActivity extends AppCompatActivity {
             }
         }));
 
-        sTerbaru.setOnClickListener(new View.OnClickListener() {
+        RecyclerView rLainnya = findViewById(R.id.rLainnya);
+        rLainnya.setHasFixedSize(true);
+        LinearLayoutManager lLainnya = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        aLainnya = new HomeUmkmListVerticalAdapter(listUmkm, this, KategoriUmkm.DEFAULT);
+        rLainnya.setAdapter(aLainnya);
+        rLainnya.setLayoutManager(lLainnya);
+
+        rLainnya.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rLainnya, new RecyclerTouchListener.ClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view, int position) {
 
             }
-        });
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         keluar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,9 +156,6 @@ public class HomeActivity extends AppCompatActivity {
         tvHolder = findViewById(R.id.tvHolder);
         keluar = findViewById(R.id.keluar);
         lData = findViewById(R.id.layoutData);
-        sTerdekat = findViewById(R.id.sTerdekat);
-        sPopuler = findViewById(R.id.sPopuler);
-        sTerbaru = findViewById(R.id.sTerbaru);
         pBar = findViewById(R.id.pBar);
         getUmkm();
     }
@@ -209,6 +204,7 @@ public class HomeActivity extends AppCompatActivity {
                 aTerdekat.notifyDataSetChanged();
                 aPopuler.notifyDataSetChanged();
                 aTerbaru.notifyDataSetChanged();
+                aLainnya.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
