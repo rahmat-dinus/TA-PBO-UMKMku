@@ -1,4 +1,4 @@
-package id.owndigital.umkmku.core.sorter;
+package id.owndigital.umkmku.model.sorter;
 
 public enum KategoriUmkm {
     DEFAULT,

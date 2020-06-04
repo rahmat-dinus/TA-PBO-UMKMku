@@ -2,43 +2,34 @@ package id.owndigital.umkmku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import id.owndigital.umkmku.core.tools.LocationHandler;
-import id.owndigital.umkmku.core.datasource.SPData;
-import id.owndigital.umkmku.page.HomeActivity;
-import id.owndigital.umkmku.page.RequestLocationActivity;
-import id.owndigital.umkmku.page.auth.MasukActivity;
+import id.owndigital.umkmku.core.tools.Helper;
+import id.owndigital.umkmku.model.implement.SplashPresenterImp;
+import id.owndigital.umkmku.presenter.SplashPresenter;
+import id.owndigital.umkmku.view.SplashView;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity implements SplashView {
+
+    SplashPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        toNextActivity();
+        presenter = new SplashPresenterImp(this, this);
+        presenter.loadData();
     }
 
-    private void toNextActivity() {
+
+    @Override
+    public void nextActivity(final Class<?> activity) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (SPData.getInstance(SplashActivity.this).isLoggedIn()) {
-                    LocationHandler location = new LocationHandler(SplashActivity.this);
-                    if (location.isLocationGranted() && location.isGpsOn()) {
-                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
-                        finish();
-                    } else {
-                        startActivity(new Intent(SplashActivity.this, RequestLocationActivity.class));
-                        finish();
-                    }
-                } else {
-                    startActivity(new Intent(SplashActivity.this, MasukActivity.class));
-                    finish();
-                }
+                new Helper(SplashActivity.this).movePage(activity);
             }
         }, 2000);
     }

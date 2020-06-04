@@ -1,4 +1,4 @@
-package id.owndigital.umkmku.core.models;
+package id.owndigital.umkmku.model;
 
 import java.util.Comparator;
 

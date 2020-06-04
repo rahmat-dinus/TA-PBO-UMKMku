@@ -1,4 +1,4 @@
-package id.owndigital.umkmku.core.models;
+package id.owndigital.umkmku.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

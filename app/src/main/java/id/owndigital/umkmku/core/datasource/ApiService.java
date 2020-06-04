@@ -1,7 +1,7 @@
 package id.owndigital.umkmku.core.datasource;
 
-import id.owndigital.umkmku.core.models.DaftarModel;
-import id.owndigital.umkmku.core.models.MasukModel;
+import id.owndigital.umkmku.model.DaftarModel;
+import id.owndigital.umkmku.model.MasukModel;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

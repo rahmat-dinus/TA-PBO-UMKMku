@@ -1,9 +1,9 @@
-package id.owndigital.umkmku.core.sorter;
+package id.owndigital.umkmku.model.sorter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import id.owndigital.umkmku.core.models.UmkmModel;
+import id.owndigital.umkmku.model.UmkmModel;
 
 public class UmkmSorter {
     private ArrayList<UmkmModel> umkmModels;

@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import id.owndigital.umkmku.R;
-import id.owndigital.umkmku.core.models.UmkmModel;
-import id.owndigital.umkmku.core.sorter.KategoriUmkm;
-import id.owndigital.umkmku.core.sorter.UmkmSorter;
+import id.owndigital.umkmku.model.UmkmModel;
+import id.owndigital.umkmku.model.sorter.KategoriUmkm;
+import id.owndigital.umkmku.model.sorter.UmkmSorter;
 import id.owndigital.umkmku.core.tools.Helper;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;

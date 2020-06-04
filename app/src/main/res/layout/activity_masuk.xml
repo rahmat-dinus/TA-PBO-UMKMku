@@ -110,12 +110,14 @@
                         android:layout_marginTop="16dp"
                         android:background="@drawable/bg_button_primary_dark"
                         android:text="@string/masuk"
+                        android:visibility="visible"
                         android:textColor="@android:color/white" />
 
                     <ProgressBar
                         android:id="@+id/pBar"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
+                        android:visibility="gone"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="16dp"
                         android:progressBackgroundTint="@color/colorPrimaryDark" />

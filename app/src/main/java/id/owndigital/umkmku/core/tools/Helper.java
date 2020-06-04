@@ -27,6 +27,15 @@ public class Helper {
         this.spData = SPData.getInstance(activity);
     }
 
+    public void movePage(Class<?> nextActivity){
+        activity.startActivity(new Intent(activity, nextActivity));
+        activity.finish();
+    }
+
+    public void newPage(Class<?> nextActivity){
+        activity.startActivity(new Intent(activity, nextActivity));
+    }
+
     public void closeKeyboard() {
         View view = this.activity.getCurrentFocus();
         if (view != null) {
