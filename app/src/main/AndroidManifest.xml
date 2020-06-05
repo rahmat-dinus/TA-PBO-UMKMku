@@ -38,7 +38,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".page.RequestLocationActivity"/>
+        <activity android:name=".page.EditUmkmActivity"></activity>
+        <activity android:name=".page.TambahUmkmActivity" />
+        <activity android:name=".page.DataUmkmActivity" />
+        <activity android:name=".page.DetailUmkmActivity" />
+        <activity android:name=".page.RequestLocationActivity" />
         <activity android:name=".page.auth.DaftarActivity" />
         <activity android:name=".page.auth.MasukActivity" />
         <activity android:name=".page.HomeActivity" />

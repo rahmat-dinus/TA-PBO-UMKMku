@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import id.owndigital.umkmku.R;
@@ -50,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         TextView keluar = findViewById(R.id.keluar);
         lData = findViewById(R.id.layoutData);
         pBar = findViewById(R.id.pBar);
+        FloatingActionButton tambahData = findViewById(R.id.tambahData);
         listUmkm = new ArrayList<>();
         presenter = new HomePresenterImp(this, this);
 
@@ -134,6 +137,13 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
                 presenter.onLongClick(view, position);
             }
         }));
+
+        tambahData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.tambahData();
+            }
+        });
 
         keluar.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,4 +13,6 @@ public interface HomePresenter {
 
     void getData();
 
+    void tambahData();
+
 }

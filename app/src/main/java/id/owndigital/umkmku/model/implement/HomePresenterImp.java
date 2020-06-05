@@ -21,9 +21,10 @@ import java.util.ArrayList;
 import id.owndigital.umkmku.R;
 import id.owndigital.umkmku.core.AppController;
 import id.owndigital.umkmku.core.datasource.BaseApi;
+import id.owndigital.umkmku.core.tools.Helper;
 import id.owndigital.umkmku.core.tools.LocationHandler;
 import id.owndigital.umkmku.model.UmkmModel;
-import id.owndigital.umkmku.model.sorter.KategoriUmkm;
+import id.owndigital.umkmku.page.TambahUmkmActivity;
 import id.owndigital.umkmku.presenter.HomePresenter;
 import id.owndigital.umkmku.view.HomeView;
 
@@ -110,5 +111,10 @@ public class HomePresenterImp implements HomePresenter {
         });
 
         AppController.getInstance().addToRequestQueue(strReq, "json_obj_req");
+    }
+
+    @Override
+    public void tambahData() {
+        new Helper(activity).newPage(TambahUmkmActivity.class);
     }
 }
