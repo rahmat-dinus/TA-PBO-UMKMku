@@ -5,7 +5,6 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,40 +12,31 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import id.owndigital.umkmku.R;
-import id.owndigital.umkmku.core.AppController;
-import id.owndigital.umkmku.core.datasource.BaseApi;
 import id.owndigital.umkmku.core.datasource.SPData;
 import id.owndigital.umkmku.core.mInterface.RecyclerTouchListener;
 import id.owndigital.umkmku.model.UmkmModel;
+import id.owndigital.umkmku.model.implement.HomePresenterImp;
 import id.owndigital.umkmku.model.sorter.KategoriUmkm;
 import id.owndigital.umkmku.core.tools.Helper;
 import id.owndigital.umkmku.core.tools.LocationHandler;
 import id.owndigital.umkmku.core.viewHolders.HomeUmkmListHorizontalAdapter;
 import id.owndigital.umkmku.core.viewHolders.HomeUmkmListVerticalAdapter;
+import id.owndigital.umkmku.presenter.HomePresenter;
+import id.owndigital.umkmku.view.HomeView;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements HomeView {
 
-    private Helper helper;
-    private LocationHandler location;
-    private TextView nama, alamat, tvHolder, keluar;
+    HomePresenter presenter;
+
+    private TextView tvHolder;
 
     private ArrayList<UmkmModel> listUmkm;
     private LinearLayout lData;
-    private RecyclerView.Adapter aTerdekat, aPopuler, aTerbaru, aLainnya;
+    private RecyclerView.Adapter<?> aTerdekat, aPopuler, aTerbaru, aLainnya;
     private ProgressBar pBar;
 
     @Override
@@ -54,14 +44,20 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        initState();
+        TextView nama = findViewById(R.id.nama);
+        TextView alamat = findViewById(R.id.alamat);
+        tvHolder = findViewById(R.id.tvHolder);
+        TextView keluar = findViewById(R.id.keluar);
+        lData = findViewById(R.id.layoutData);
+        pBar = findViewById(R.id.pBar);
+        listUmkm = new ArrayList<>();
+        presenter = new HomePresenterImp(this, this);
 
-        nama.setText(helper.greetingText());
-        alamat.setText(location.getAddress());
+        nama.setText(new Helper(this).greetingText());
+        alamat.setText(new LocationHandler(this).getAddress());
         alamat.setSelected(true);
         tvHolder.setVisibility(View.GONE);
-
-        listUmkm = new ArrayList<>();
+        presenter.getData();
 
         RecyclerView rTerdekat = findViewById(R.id.rTerdekat);
         rTerdekat.setHasFixedSize(true);
@@ -73,12 +69,12 @@ public class HomeActivity extends AppCompatActivity {
         rTerdekat.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rTerdekat, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                presenter.onClick(view, position);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-
+                presenter.onLongClick(view, position);
             }
         }));
 
@@ -92,12 +88,12 @@ public class HomeActivity extends AppCompatActivity {
         rPopuler.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rPopuler, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                presenter.onClick(view, position);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-
+                presenter.onLongClick(view, position);
             }
         }));
 
@@ -111,12 +107,12 @@ public class HomeActivity extends AppCompatActivity {
         rTerbaru.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rTerbaru, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                presenter.onClick(view, position);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-
+                presenter.onLongClick(view, position);
             }
         }));
 
@@ -130,97 +126,36 @@ public class HomeActivity extends AppCompatActivity {
         rLainnya.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rLainnya, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                presenter.onClick(view, position);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-
+                presenter.onLongClick(view, position);
             }
         }));
 
         keluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup(v);
+                presenter.onOptionClick(v);
             }
         });
     }
 
-    private void initState() {
-        Activity activity = HomeActivity.this;
-        helper = new Helper(activity);
-        location = new LocationHandler(activity);
-        nama = findViewById(R.id.nama);
-        alamat = findViewById(R.id.alamat);
-        tvHolder = findViewById(R.id.tvHolder);
-        keluar = findViewById(R.id.keluar);
-        lData = findViewById(R.id.layoutData);
-        pBar = findViewById(R.id.pBar);
-        getUmkm();
+    @Override
+    public void setProcess(boolean onProcess) {
+        if (onProcess) {
+            pBar.setVisibility(View.VISIBLE);
+            lData.setVisibility(View.GONE);
+            tvHolder.setVisibility(View.GONE);
+        } else {
+            pBar.setVisibility(View.GONE);
+        }
     }
 
-    private void getUmkm() {
-        pBar.setVisibility(View.VISIBLE);
-        lData.setVisibility(View.GONE);
-        tvHolder.setVisibility(View.GONE);
-
-        StringRequest strReq = new StringRequest(Request.Method.GET, BaseApi.loadData, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray data = new JSONArray(response);
-                    if (data.length() > 0) {
-                        lData.setVisibility(View.VISIBLE);
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject productObject = data.getJSONObject(i);
-                            listUmkm.add(new UmkmModel(
-                                    productObject.getString("uid"),
-                                    productObject.getString("nama_umkm"),
-                                    productObject.getString("hp_umkm"),
-                                    productObject.getString("email_umkm"),
-                                    productObject.getString("longitude"),
-                                    productObject.getString("latitude"),
-                                    productObject.getString("count_populer"),
-                                    productObject.getString("foto"),
-                                    productObject.getString("created_at"),
-                                    location.hitungJarak(
-                                            Double.parseDouble(productObject.getString("latitude")),
-                                            Double.parseDouble(productObject.getString("longitude"))
-                                    )
-                            ));
-                        }
-                    } else if (data.length() == 0) {
-                        tvHolder.setVisibility(View.VISIBLE);
-                        tvHolder.setText(R.string.tdkAdaData);
-                    } else {
-                        tvHolder.setVisibility(View.VISIBLE);
-                        tvHolder.setText(R.string.gagalMuat);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                aTerdekat.notifyDataSetChanged();
-                aPopuler.notifyDataSetChanged();
-                aTerbaru.notifyDataSetChanged();
-                aLainnya.notifyDataSetChanged();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                tvHolder.setVisibility(View.VISIBLE);
-                tvHolder.setText(error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-        pBar.setVisibility(View.GONE);
-        AppController.getInstance().addToRequestQueue(strReq, "json_obj_req");
-    }
-
-    public void showPopup(View v) {
+    @Override
+    public void showOptions(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_home, popup.getMenu());
@@ -228,15 +163,33 @@ public class HomeActivity extends AppCompatActivity {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.keluar:
-                        SPData.getInstance(HomeActivity.this).logout();
-                        finish();
-                        return true;
-                    default:
-                        return false;
+                if (item.getItemId() == R.id.keluar) {
+                    SPData.getInstance(HomeActivity.this).logout();
+                    finish();
+                    return true;
                 }
+                return false;
             }
         });
+    }
+
+    @Override
+    public void hasData(ArrayList<UmkmModel> umkm) {
+        lData.setVisibility(View.VISIBLE);
+        listUmkm.addAll(umkm);
+    }
+
+    @Override
+    public void hasError(String error) {
+        tvHolder.setVisibility(View.VISIBLE);
+        tvHolder.setText(error);
+    }
+
+    @Override
+    public void connectionDone() {
+        aTerdekat.notifyDataSetChanged();
+        aPopuler.notifyDataSetChanged();
+        aTerbaru.notifyDataSetChanged();
+        aLainnya.notifyDataSetChanged();
     }
 }

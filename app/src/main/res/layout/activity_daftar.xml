@@ -110,7 +110,7 @@
                         android:layout_gravity="center_vertical"
                         android:autofillHints="@string/telepon"
                         android:hint="@string/telepon"
-                        android:inputType="textPhonetic"
+                        android:inputType="phone"
                         android:textColor="@android:color/black"
                         android:textColorHighlight="@color/colorPrimaryDark" />
 
