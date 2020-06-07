@@ -32,6 +32,20 @@
 
     <string name="maps">Maps</string>
     <string name="infoPemilik">Informasi Pemilik</string>
+    <string name="infoUmkm">Informasi UMKM</string>
     <string name="edit">Edit</string>
     <string name="hapus">Hapus</string>
+    <string name="tambah">Tambah Data</string>
+    <string name="namaUmkm">Nama Umkm</string>
+    <string name="hpUmkm">Telepon Umkm</string>
+    <string name="emailUmkm">Email Umkm</string>
+    <string name="namaPemilik">Nama Pemilik</string>
+    <string name="hpPemilik">Telepon Pemilik</string>
+    <string name="emailPemilik">Email Pemilik</string>
+    <string name="lokasi">Lokasi</string>
+    <string name="lon">Longitude</string>
+    <string name="lat">Latitude</string>
+    <string name="foto">Foto</string>
+    <string name="gpsSkrg">Gunakan Lokasi Saat Ini</string>
+    <string name="ganti">Ganti Foto</string>
 </resources>

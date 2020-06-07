@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.Locale;
 
@@ -39,6 +43,8 @@ public class DetailUmkmActivity extends AppCompatActivity implements DetailUmkmV
     private ImageView fotoUmkm;
     private DetailUmkmModel data;
 
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +66,26 @@ public class DetailUmkmActivity extends AppCompatActivity implements DetailUmkmV
         CardView hpUmkm = findViewById(R.id.hpUmkm);
         CardView hpPemilik = findViewById(R.id.hpPemilik);
         CardView emailPemilik = findViewById(R.id.emailPemilik);
-        presenter.getData();
+
+        collapsingToolbarLayout = findViewById(R.id.coll);
+        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
+                    //  on Collapse
+                    collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER_VERTICAL);
+                    collapsingToolbarLayout.setTitle(data.getNamaUmkm());
+                    collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(android.R.color.white));
+                    collapsingToolbarLayout.setStatusBarScrimColor(getResources().getColor(android.R.color.transparent));
+                    collapsingToolbarLayout.setContentScrim(new ColorDrawable(getResources().getColor(R.color.hitamtrans)));
+                } else {
+                    collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER_VERTICAL);
+                    collapsingToolbarLayout.setTitle("\t");
+                    collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(android.R.color.white));
+                }
+            }
+        });
 
         maps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +135,12 @@ public class DetailUmkmActivity extends AppCompatActivity implements DetailUmkmV
                 presenter.hapusData();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.getData();
     }
 
     @Override
