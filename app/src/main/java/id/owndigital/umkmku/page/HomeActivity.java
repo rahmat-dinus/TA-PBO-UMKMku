@@ -1,10 +1,12 @@
 package id.owndigital.umkmku.page;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +21,6 @@ import java.util.ArrayList;
 
 import id.owndigital.umkmku.R;
 import id.owndigital.umkmku.core.datasource.SPData;
-import id.owndigital.umkmku.core.mInterface.RecyclerTouchListener;
 import id.owndigital.umkmku.model.UmkmModel;
 import id.owndigital.umkmku.model.implement.HomePresenterImp;
 import id.owndigital.umkmku.model.sorter.KategoriUmkm;
@@ -60,7 +61,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         alamat.setText(new LocationHandler(this).getAddress());
         alamat.setSelected(true);
         tvHolder.setVisibility(View.GONE);
-        presenter.getData();
 
         RecyclerView rTerdekat = findViewById(R.id.rTerdekat);
         rTerdekat.setHasFixedSize(true);
@@ -69,36 +69,12 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         rTerdekat.setAdapter(aTerdekat);
         rTerdekat.setLayoutManager(lTerdekat);
 
-        rTerdekat.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rTerdekat, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                presenter.onClick(view, position);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                presenter.onLongClick(view, position);
-            }
-        }));
-
         RecyclerView rPopuler = findViewById(R.id.rPopuler);
         rPopuler.setHasFixedSize(true);
         LinearLayoutManager lPopuler = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         aPopuler = new HomeUmkmListHorizontalAdapter(listUmkm, this, KategoriUmkm.POPULER_ASC);
         rPopuler.setAdapter(aPopuler);
         rPopuler.setLayoutManager(lPopuler);
-
-        rPopuler.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rPopuler, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                presenter.onClick(view, position);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                presenter.onLongClick(view, position);
-            }
-        }));
 
         RecyclerView rTerbaru = findViewById(R.id.rTerbaru);
         rTerbaru.setHasFixedSize(true);
@@ -107,17 +83,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         rTerbaru.setAdapter(aTerbaru);
         rTerbaru.setLayoutManager(lTerbaru);
 
-        rTerbaru.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rTerbaru, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                presenter.onClick(view, position);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                presenter.onLongClick(view, position);
-            }
-        }));
 
         RecyclerView rLainnya = findViewById(R.id.rLainnya);
         rLainnya.setHasFixedSize(true);
@@ -125,18 +90,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         aLainnya = new HomeUmkmListVerticalAdapter(listUmkm, this, KategoriUmkm.DEFAULT);
         rLainnya.setAdapter(aLainnya);
         rLainnya.setLayoutManager(lLainnya);
-
-        rLainnya.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), rLainnya, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                presenter.onClick(view, position);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                presenter.onLongClick(view, position);
-            }
-        }));
 
         tambahData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +104,33 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
                 presenter.onOptionClick(v);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Apakah Anda Ingin Keluar?");
+        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.getData();
     }
 
     @Override
@@ -186,6 +166,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     @Override
     public void hasData(ArrayList<UmkmModel> umkm) {
         lData.setVisibility(View.VISIBLE);
+        listUmkm.clear();
         listUmkm.addAll(umkm);
     }
 

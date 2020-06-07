@@ -3,6 +3,7 @@ package id.owndigital.umkmku.core.viewHolders;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import id.owndigital.umkmku.model.UmkmModel;
 import id.owndigital.umkmku.model.sorter.KategoriUmkm;
 import id.owndigital.umkmku.model.sorter.UmkmSorter;
 import id.owndigital.umkmku.core.tools.Helper;
+import id.owndigital.umkmku.page.DetailUmkmActivity;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -93,7 +95,7 @@ public class HomeUmkmListVerticalAdapter extends RecyclerView.Adapter<HomeUmkmLi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UmkmViewHolder holder, int postition) {
-        UmkmModel umkm = umkmModels.get(postition);
+        final UmkmModel umkm = umkmModels.get(postition);
 
         Glide.with(context).load(umkm.getFoto())
                 .thumbnail(0.5f)
@@ -115,8 +117,10 @@ public class HomeUmkmListVerticalAdapter extends RecyclerView.Adapter<HomeUmkmLi
         holder.itemCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),
-                        "On Going Mamang", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(context, DetailUmkmActivity.class);
+                i.putExtra("uid", umkm.getUid());
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
             }
         });
 
@@ -125,6 +129,6 @@ public class HomeUmkmListVerticalAdapter extends RecyclerView.Adapter<HomeUmkmLi
 
     @Override
     public int getItemCount() {
-        return Math.min(umkmModels.size(), 5);
+        return umkmModels.size();
     }
 }

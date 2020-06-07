@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.view.View;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,17 +39,6 @@ public class HomePresenterImp implements HomePresenter {
         this.location = new LocationHandler(activity);
     }
 
-
-    @Override
-    public void onClick(View v, int position) {
-
-    }
-
-    @Override
-    public void onLongClick(View v, int position) {
-
-    }
-
     @Override
     public void onOptionClick(View v) {
         view.showOptions(v);
@@ -62,6 +48,7 @@ public class HomePresenterImp implements HomePresenter {
     public void getData() {
         final Resources res = activity.getResources();
         view.setProcess(true);
+        listUmkm.clear();
 
         StringRequest strReq = new StringRequest(Request.Method.GET, BaseApi.loadData, new Response.Listener<String>() {
 

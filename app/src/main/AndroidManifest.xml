@@ -40,7 +40,6 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".page.EditUmkmActivity"></activity>
         <activity android:name=".page.TambahUmkmActivity" />
-        <activity android:name=".page.DataUmkmActivity" />
         <activity android:name=".page.DetailUmkmActivity" />
         <activity android:name=".page.RequestLocationActivity" />
         <activity android:name=".page.auth.DaftarActivity" />

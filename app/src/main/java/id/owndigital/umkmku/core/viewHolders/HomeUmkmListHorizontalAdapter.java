@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import id.owndigital.umkmku.model.UmkmModel;
 import id.owndigital.umkmku.model.sorter.KategoriUmkm;
 import id.owndigital.umkmku.model.sorter.UmkmSorter;
 import id.owndigital.umkmku.core.tools.Helper;
+import id.owndigital.umkmku.page.DetailUmkmActivity;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -97,7 +99,7 @@ public class HomeUmkmListHorizontalAdapter extends RecyclerView.Adapter<HomeUmkm
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UmkmViewHolder holder, int postition) {
-        UmkmModel umkm = umkmModels.get(postition);
+        final UmkmModel umkm = umkmModels.get(postition);
 
         Glide.with(context).load(umkm.getFoto())
                 .thumbnail(0.5f)
@@ -122,8 +124,10 @@ public class HomeUmkmListHorizontalAdapter extends RecyclerView.Adapter<HomeUmkm
         holder.itemCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),
-                        "On Going Mamang", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(context, DetailUmkmActivity.class);
+                i.putExtra("uid", umkm.getUid());
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
             }
         });
 
@@ -131,7 +135,7 @@ public class HomeUmkmListHorizontalAdapter extends RecyclerView.Adapter<HomeUmkm
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(),
-                        "On Going Mamang", Toast.LENGTH_LONG).show();
+                        "Selengkapnya", Toast.LENGTH_LONG).show();
             }
         });
     }

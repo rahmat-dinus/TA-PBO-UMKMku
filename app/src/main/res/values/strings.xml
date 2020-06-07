@@ -29,4 +29,9 @@
     <string name="selengkapnya">Selengkapnya</string>
     <string name="tdkAdaData">Tidak Ada Data</string>
     <string name="gagalMuat">Gagal Memuat Data</string>
+
+    <string name="maps">Maps</string>
+    <string name="infoPemilik">Informasi Pemilik</string>
+    <string name="edit">Edit</string>
+    <string name="hapus">Hapus</string>
 </resources>
