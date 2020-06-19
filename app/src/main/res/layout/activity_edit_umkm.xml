@@ -218,6 +218,15 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/jkPemilik"
+                        android:textSize="20sp"
+                        android:hint="@string/jk"
+                        app:met_floatingLabel="highlight" />
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

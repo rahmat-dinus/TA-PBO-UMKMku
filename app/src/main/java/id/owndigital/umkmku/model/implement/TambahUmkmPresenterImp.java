@@ -32,10 +32,11 @@ public class TambahUmkmPresenterImp implements TambahUmkmPresenter {
     private Activity activity;
     private TambahUmkmView view;
 
-    public TambahUmkmPresenterImp(Activity activity, TambahUmkmView view){
+    public TambahUmkmPresenterImp(Activity activity, TambahUmkmView view) {
         this.activity = activity;
         this.view = view;
     }
+
     @Override
     public void getLocation() {
         GPSTracker gps = new GPSTracker(activity);
@@ -44,7 +45,7 @@ public class TambahUmkmPresenterImp implements TambahUmkmPresenter {
 
     @Override
     public void tambahData(EditText namaUmkm, EditText hpUmkm, EditText emailUmkm,
-                           EditText namaPemilik, EditText hpPemilik, EditText emailPemilik,
+                           EditText namaPemilik, EditText hpPemilik, EditText emailPemilik, String jkPemilik,
                            EditText lon, EditText lat, View v) {
         new Helper(activity).closeKeyboard();
         String mNamaUmkm = namaUmkm.getText().toString();
@@ -75,14 +76,14 @@ public class TambahUmkmPresenterImp implements TambahUmkmPresenter {
             view.setError(lat, res.getString(R.string.isiKolom));
         } else {
             reqTambahData(mNamaUmkm, mEmailUmkm, mTelponUmkm, mNamaPemilik, mEmailPemilik,
-                    mTelponPemilik, mLon, mLat);
+                    mTelponPemilik, jkPemilik, mLon, mLat);
         }
     }
 
 
     private void reqTambahData(final String mNamaUmkm, final String mEmailUmkm, final String mTelponUmkm,
-                             final String mNamaPemilik, final String mEmailPemilik, final String mTelponPemilik,
-                             final String mLon, final String mLat) {
+                               final String mNamaPemilik, final String mEmailPemilik, final String mTelponPemilik,
+                               final String jkPemilik, final String mLon, final String mLat) {
 
         view.setProcess(true);
 
@@ -140,6 +141,7 @@ public class TambahUmkmPresenterImp implements TambahUmkmPresenter {
                 params.put("nama_pemilik", mNamaPemilik);
                 params.put("hp_pemilik", mTelponPemilik);
                 params.put("email_pemilik", mEmailPemilik);
+                params.put("jk_pemilik", jkPemilik);
                 params.put("longitude", mLon);
                 params.put("latitude", mLat);
                 return params;

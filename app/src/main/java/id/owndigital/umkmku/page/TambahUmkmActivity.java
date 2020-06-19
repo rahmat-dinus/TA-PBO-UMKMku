@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import id.owndigital.umkmku.R;
 import id.owndigital.umkmku.model.implement.EditUmkmPresenterImp;
@@ -22,6 +25,11 @@ public class TambahUmkmActivity extends AppCompatActivity implements TambahUmkmV
     private EditText namaUmkm, hpUmkm, emailumkm, namaPemilik, hpPemilik, emailPemilik, lon, lat;
     private Button tambah;
     private ProgressBar pBar;
+    private MaterialBetterSpinner jkPemilik;
+
+    private static final String[] eJK = new String[] {
+            "Laki - Laki", "Perempuan"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +43,16 @@ public class TambahUmkmActivity extends AppCompatActivity implements TambahUmkmV
         namaPemilik = findViewById(R.id.namaPemilik);
         hpPemilik = findViewById(R.id.hpPemilik);
         emailPemilik = findViewById(R.id.emailPemilik);
+        jkPemilik = findViewById(R.id.jkPemilik);
         lon = findViewById(R.id.longitude);
         lat = findViewById(R.id.latitude);
         Button gpsSkrg = findViewById(R.id.lokSkrg);
         tambah = findViewById(R.id.tambahData);
         pBar = findViewById(R.id.pBar);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, eJK);
+        jkPemilik.setAdapter(adapter);
 
         gpsSkrg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +64,7 @@ public class TambahUmkmActivity extends AppCompatActivity implements TambahUmkmV
         tambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.tambahData(namaUmkm, hpUmkm, emailumkm, namaPemilik, hpPemilik, emailPemilik, lon, lat, v);
+                presenter.tambahData(namaUmkm, hpUmkm, emailumkm, namaPemilik, hpPemilik, emailPemilik, jkPemilik.getText().toString(), lon, lat, v);
             }
         });
     }

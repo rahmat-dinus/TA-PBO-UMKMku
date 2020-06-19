@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Locale;
 
@@ -39,6 +41,11 @@ public class EditUmkmActivity extends AppCompatActivity implements EditUmkmView 
     private Button edit;
     private ProgressBar pBar;
     private DetailUmkmModel data;
+    private MaterialBetterSpinner jkPemilik;
+
+    private static final String[] eJK = new String[] {
+            "Laki - Laki", "Perempuan"
+    };
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -55,12 +62,17 @@ public class EditUmkmActivity extends AppCompatActivity implements EditUmkmView 
         namaPemilik = findViewById(R.id.namaPemilik);
         hpPemilik = findViewById(R.id.hpPemilik);
         emailPemilik = findViewById(R.id.emailPemilik);
+        jkPemilik = findViewById(R.id.jkPemilik);
         lon = findViewById(R.id.longitude);
         lat = findViewById(R.id.latitude);
         Button gpsSkrg = findViewById(R.id.lokSkrg);
         edit = findViewById(R.id.editData);
         pBar = findViewById(R.id.pBar);
         presenter.getData();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, eJK);
+        jkPemilik.setAdapter(adapter);
 
         gpsSkrg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +84,7 @@ public class EditUmkmActivity extends AppCompatActivity implements EditUmkmView 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.editData(namaUmkm, hpUmkm, emailumkm, namaPemilik, hpPemilik, emailPemilik, lon, lat, v);
+                presenter.editData(namaUmkm, hpUmkm, emailumkm, namaPemilik, hpPemilik, emailPemilik, jkPemilik.getText().toString(), lon, lat, v);
             }
         });
 
@@ -145,6 +157,7 @@ public class EditUmkmActivity extends AppCompatActivity implements EditUmkmView 
         namaPemilik.setText(data.getNamaPemilik());
         hpPemilik.setText(data.getHpPemilik());
         emailPemilik.setText(data.getEmailPemilik());
+        jkPemilik.setText(data.getJkPemilik());
         lon.setText(data.getLongitude());
         lat.setText(data.getLatitude());
     }

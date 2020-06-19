@@ -39,6 +39,7 @@ public class DetailUmkmActivity extends AppCompatActivity implements DetailUmkmV
     private TextView count;
     private TextView jarak;
     private TextView namaPemilik;
+    private TextView jkPemilik;
     private TextView error;
     private ImageView fotoUmkm;
     private DetailUmkmModel data;
@@ -57,6 +58,7 @@ public class DetailUmkmActivity extends AppCompatActivity implements DetailUmkmV
         count = findViewById(R.id.count);
         jarak = findViewById(R.id.jarakUmkm);
         namaPemilik = findViewById(R.id.namaPemilik);
+        jkPemilik = findViewById(R.id.jkPemilik);
         TextView edit = findViewById(R.id.editUmkm);
         TextView hapus = findViewById(R.id.hapusUmkm);
         error = findViewById(R.id.error);
@@ -168,6 +170,7 @@ public class DetailUmkmActivity extends AppCompatActivity implements DetailUmkmV
         count.setText(data.getCountPopuler());
         jarak.setText(String.format(Locale.getDefault(), "%.2f", data.getJarak()) + " KM");
         namaPemilik.setText(data.getNamaPemilik());
+        jkPemilik.setText(data.getJkPemilik());
         layoutData.setVisibility(View.VISIBLE);
     }
 

@@ -2,13 +2,13 @@ package id.owndigital.umkmku.model;
 
 public class DetailUmkmModel {
     private String countPopuler, uid, namaUmkm, hpUmkm, emailUmkm, namaPemilik, hpPemilik,
-            emailPemilik, longitude, latitude, foto, createdAt, updatedAt;
+            emailPemilik, jkPemilik, longitude, latitude, foto, createdAt, updatedAt;
     private double jarak;
 
     public DetailUmkmModel(String countPopuler, String uid, String namaUmkm, String hpUmkm,
-                           String emailUmkm, String namaPemilik, String hpPemilik, String emailPemilik,
-                           String longitude, String latitude, String foto, String createdAt,
-                           String updatedAt, double jarak) {
+                           String emailUmkm, String namaPemilik, String hpPemilik,
+                           String emailPemilik, String jkPemilik, String longitude, String latitude,
+                           String foto, String createdAt, String updatedAt, double jarak) {
         this.countPopuler = countPopuler;
         this.uid = uid;
         this.namaUmkm = namaUmkm;
@@ -17,6 +17,7 @@ public class DetailUmkmModel {
         this.namaPemilik = namaPemilik;
         this.hpPemilik = hpPemilik;
         this.emailPemilik = emailPemilik;
+        this.jkPemilik = jkPemilik;
         this.longitude = longitude;
         this.latitude = latitude;
         this.foto = foto;
@@ -87,6 +88,14 @@ public class DetailUmkmModel {
 
     public void setEmailPemilik(String emailPemilik) {
         this.emailPemilik = emailPemilik;
+    }
+
+    public String getJkPemilik() {
+        return jkPemilik;
+    }
+
+    public void setJkPemilik(String jkPemilik) {
+        this.jkPemilik = jkPemilik;
     }
 
     public String getLongitude() {

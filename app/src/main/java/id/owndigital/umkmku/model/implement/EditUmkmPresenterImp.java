@@ -52,8 +52,7 @@ public class EditUmkmPresenterImp implements EditUmkmPresenter {
 
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject data = new JSONObject(response);
+                        try {                            JSONObject data = new JSONObject(response);
                             if (data.getInt("success") == 1) {
                                 detailUmkmModel = new DetailUmkmModel(
                                         data.getString("count_populer"),
@@ -64,6 +63,7 @@ public class EditUmkmPresenterImp implements EditUmkmPresenter {
                                         data.getString("nama_pemilik"),
                                         data.getString("hp_pemilik"),
                                         data.getString("email_pemilik"),
+                                        data.getString("jk_pemilik"),
                                         data.getString("longitude"),
                                         data.getString("latitude"),
                                         data.getString("foto"),
@@ -109,7 +109,7 @@ public class EditUmkmPresenterImp implements EditUmkmPresenter {
     @Override
     public void editData(EditText namaUmkm, EditText hpUmkm, EditText emailUmkm,
                          EditText namaPemilik, EditText hpPemilik, EditText emailPemilik,
-                         EditText lon, EditText lat, View v) {
+                         String jkPemilik, EditText lon, EditText lat, View v) {
         new Helper(activity).closeKeyboard();
         String mNamaUmkm = namaUmkm.getText().toString();
         String mEmailUmkm = emailUmkm.getText().toString();
@@ -139,13 +139,13 @@ public class EditUmkmPresenterImp implements EditUmkmPresenter {
             view.setError(lat, res.getString(R.string.isiKolom));
         } else {
             reqEditData(mNamaUmkm, mEmailUmkm, mTelponUmkm, mNamaPemilik, mEmailPemilik,
-                    mTelponPemilik, mLon, mLat);
+                    mTelponPemilik, jkPemilik, mLon, mLat);
         }
     }
 
     private void reqEditData(final String mNamaUmkm, final String mEmailUmkm, final String mTelponUmkm,
                              final String mNamaPemilik, final String mEmailPemilik, final String mTelponPemilik,
-                             final String mLon, final String mLat) {
+                             final String jkPemilik, final String mLon, final String mLat) {
 
         view.setProcess(true);
 
@@ -203,6 +203,7 @@ public class EditUmkmPresenterImp implements EditUmkmPresenter {
                 params.put("nama_pemilik", mNamaPemilik);
                 params.put("hp_pemilik", mTelponPemilik);
                 params.put("email_pemilik", mEmailPemilik);
+                params.put("jk_pemilik", jkPemilik);
                 params.put("longitude", mLon);
                 params.put("latitude", mLat);
                 return params;

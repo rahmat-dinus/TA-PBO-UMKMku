@@ -7,5 +7,5 @@ public interface TambahUmkmPresenter {
     void getLocation();
 
     void tambahData(EditText namaUmkm, EditText hpUmkm, EditText emailUmkm, EditText namaPemilik,
-                  EditText hpPemilik, EditText emailPemilik, EditText lon, EditText lat, View view);
+                  EditText hpPemilik, EditText emailPemilik, String jkPemilik, EditText lon, EditText lat, View view);
 }

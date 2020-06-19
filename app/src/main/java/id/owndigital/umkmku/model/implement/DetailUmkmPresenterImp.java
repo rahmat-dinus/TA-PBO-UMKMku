@@ -61,6 +61,7 @@ public class DetailUmkmPresenterImp implements DetailUmkmPresenter {
                                         data.getString("nama_pemilik"),
                                         data.getString("hp_pemilik"),
                                         data.getString("email_pemilik"),
+                                        data.getString("jk_pemilik"),
                                         data.getString("longitude"),
                                         data.getString("latitude"),
                                         data.getString("foto"),
